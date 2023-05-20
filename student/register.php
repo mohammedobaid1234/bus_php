@@ -131,7 +131,7 @@ if (isset($_POST['submit'])){
                         <div class="col-2">
                             <div class="input-group">
                                 <label class="label">Enter the mobile number</label>
-                                <input class="input--style-4" name="mobile_no" type="number" placeholder="Enter the mobile number" required>
+                                <input class="input--style-4" name="mobile_no" type="phone" placeholder="Enter the mobile number" minlength="10" maxlength="10"  pattern="\d{10}" required>
                             </div>
                         </div>
                     </div>
@@ -140,7 +140,7 @@ if (isset($_POST['submit'])){
                         <div class="col-2">
                             <div class="input-group">
                                 <label class="label">Enter a relative's phone number</label>
-                                <input class="input--style-4" name="relatives_mobile_no"  type="number" placeholder="Enter a relative's phone number" required>
+                                <input class="input--style-4" name="relatives_mobile_no"  type="phone" placeholder="Enter a relative's phone number" minlength="10" maxlength="10"  pattern="\d{10}"  required>
                             </div>
                         </div>
                         <div class="col-2">
@@ -154,8 +154,19 @@ if (isset($_POST['submit'])){
                     <div class="row row-space">
                         <div class="col-2">
                             <div class="input-group">
-                                <label class="label">Blood Group Type</label>
-                                <input name="blood_type" class="input--style-4" type="text" placeholder="Blood Group Type" required>
+                                <!-- <label class="label">Blood Group Type</label> -->
+                                    <select name="blood_type" class="input--style-4" type="text" placeholder="Blood Group Type" required>
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                    <option value="O+">O+</option>
+                                    <option value="O-">O-</option>
+                                </select>
+
+                                <!-- <input name="blood_type" class="input--style-4" type="text" placeholder="Blood Group Type" required> -->
                             </div>
                         </div>
                         <div class="col-2">
