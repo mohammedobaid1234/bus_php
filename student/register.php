@@ -1,42 +1,47 @@
 <?php
 
 if (isset($_POST['submit'])){
-    global $conn;
-    session_start();
-    include("../include/connection.php");
-    $std_id = $_POST['std_id'];
-    $qry="select * from students where id ='".$std_id."' and status='1'";
-    $result=mysqli_query($conn,$qry);
-    if(mysqli_num_rows($result) > 0)
-    {
-        $_SESSION['msg']="This User Already Exist";
-//        exit;
-//        exit;
+    if($_POST['password'] != $_POST['confirm-password']){
+        $_SESSION['msg']="password and confirm password not matched";
+
     }else{
-        $name = addslashes($_POST['name']);
+        global $conn;
+        session_start();
+        include("../include/connection.php");
         $std_id = $_POST['std_id'];
-        $email = $_POST['email'];
-        $city = $_POST['city'];
-        $neighborhood = $_POST['neighborhood'];
-        $mobile_no = $_POST['mobile_no'];
-        $relatives_mobile_no = $_POST['relatives_mobile_no'];
-        $kinship_relationship = $_POST['kinship_relationship'];
-        $blood_type = $_POST['blood_type'];
-        $password = $_POST['password'];
-        $specialization = $_POST['specialization'];
-        $status = 1;
-        $query = "INSERT INTO students (name, id, email, city, neighborhood, mobile_no, relatives_mobile_no,kinship_relationship,blood_type,password,status, specialization)
-                    VALUES ('$name','$std_id','$email','$city','$neighborhood','$mobile_no','$relatives_mobile_no','$kinship_relationship','$blood_type','$password',1, '$specialization')";
-        mysqli_query($conn, $query);
-         header( "Location:../index.php");
-
-        ?>
-        <script>
-           openModal();
-        </script>
-    <?php
-
-   }
+        $qry="select * from students where id ='".$std_id."' and status='1'";
+        $result=mysqli_query($conn,$qry);
+        if(mysqli_num_rows($result) > 0)
+        {
+            $_SESSION['msg']="This User Already Exist";
+    //        exit;
+    //        exit;
+        }else{
+            $name = addslashes($_POST['name']);
+            $std_id = $_POST['std_id'];
+            $email = $_POST['email'];
+            $city = $_POST['city'];
+            $neighborhood = $_POST['neighborhood'];
+            $mobile_no = $_POST['mobile_no'];
+            $relatives_mobile_no = $_POST['relatives_mobile_no'];
+            $kinship_relationship = $_POST['kinship_relationship'];
+            $blood_type = $_POST['blood_type'];
+            $password = $_POST['password'];
+            $specialization = $_POST['specialization'];
+            $status = 1;
+            $query = "INSERT INTO students (name, id, email, city, neighborhood, mobile_no, relatives_mobile_no,kinship_relationship,blood_type,password,status, specialization)
+                        VALUES ('$name','$std_id','$email','$city','$neighborhood','$mobile_no','$relatives_mobile_no','$kinship_relationship','$blood_type','$password',1, '$specialization')";
+            mysqli_query($conn, $query);
+             header( "Location:../index.php");
+    
+            ?>
+            <script>
+               openModal();
+            </script>
+        <?php
+    
+       }
+    }
 
 
 
@@ -154,7 +159,7 @@ if (isset($_POST['submit'])){
                     <div class="row row-space">
                         <div class="col-2">
                             <div class="">
-                                <!-- <label class="label" style="display:block">Blood Group Type</label> -->
+                                <label class="label" style="display:block">Blood Group Type</label>
                                 <select name="blood_type" class="input--style-4 form-control" type="text" placeholder="Blood Group Type" required>
                                     <option value="A+">A+</option>
                                     <option value="A-">A-</option>
@@ -173,6 +178,12 @@ if (isset($_POST['submit'])){
                             <div class="input-group">
                                 <label class="label">password</label>
                                 <input name="password" class="input--style-4" type="password" placeholder="password" required>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">confirm password</label>
+                                <input name="confirm-password" id="confirm-password" class="input--style-4" type="password" placeholder="password" required>
                             </div>
                         </div>
                         <div class="row row-space">
@@ -313,6 +324,7 @@ if (isset($_POST['submit'])){
 <script src="../assets/assetsForRegister/vendor/select2/select2.min.js"></script>
 <script src="../assets/assetsForRegister/vendor/datepicker/moment.min.js"></script>
 <script src="../assets/assetsForRegister/vendor/datepicker/daterangepicker.js"></script>
+
 
 <!-- Main JS-->
 <script src="js/global.js"></script>
