@@ -6,19 +6,16 @@ if (isset($_POST['submit'])){
 
     include("../include/connection.php");
     $std_id = $_POST['std_id'];
-    echo "$std_id ";
 
     $password = $_POST['password'];
 
     if($std_id=="")
     {
-        $_SESSION['msg']="1";
         header( "Location:./index.php");
         exit;
     }
     else if($password=="")
     {
-        $_SESSION['msg']="2";
         header( "Location:./index.php");
         exit;
     }
@@ -35,9 +32,9 @@ if (isset($_POST['submit'])){
             header( "Location:./home.php");
             exit;
         }else{
-            $_SESSION['msg']="4";
-            header( "Location:./index.php");
-            exit;
+            $_SESSION['msg']="Your account is invalid";
+            // header( "Location:./index.php");
+            // exit;
         }
 
 
@@ -72,7 +69,16 @@ if (isset($_POST['submit'])){
 
 <div class="limiter">
     <div class="container-login100">
+<?php
+        if(isset($_SESSION["msg"]) && $_SESSION["msg"] != '') {
+        $error = $_SESSION["msg"] ;
+        $_SESSION["msg"] = '';
+        echo  "<div role='alert'  class='alert-danger w-50 m-auto text-center' style='background:red;color:#fff'>$error</div> ";
+        unset($_SESSION["msg"]);
+
+        }?>
         <div class="wrap-login100">
+        
             <div class="login100-pic js-tilt" data-tilt>
                 <img src="../assets/assetsForLogin/images/img-01.png" alt="IMG">
             </div>
