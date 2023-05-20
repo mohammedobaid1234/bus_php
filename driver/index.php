@@ -6,7 +6,6 @@ if (isset($_POST['submit'])){
 
     include("../include/connection.php");
     $std_id = $_POST['std_id'];
-    echo "$std_id ";
 
     $password = $_POST['password'];
 
@@ -71,6 +70,7 @@ if (isset($_POST['submit'])){
 <body>
 
 <div class="limiter">
+    <div class="container-login100">
     <?php 
     if(isset($_SESSION["msg"]) && $_SESSION["msg"] != '') {
         $error = $_SESSION["msg"] ;
@@ -80,7 +80,6 @@ if (isset($_POST['submit'])){
 
         }
     ?>
-    <div class="container-login100">
         <div class="wrap-login100">
             <div class="login100-pic js-tilt" data-tilt>
                 <img src="../assets/assetsForLogin/images/img-01.png" alt="IMG">
