@@ -8,7 +8,7 @@ if($_SESSION['role'] == 'driver'){
 }
 if($_SESSION['role'] == 'admin'){
     $id = $_SESSION['id'];
-    $qry = "SELECT * , students.id as std  FROM students";
+    $qry = "SELECT * , students.id as std  FROM students where status != '1'";
     $result=mysqli_query($conn,$qry);
 
     if (isset($_POST['submit'])) {
