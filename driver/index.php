@@ -35,9 +35,9 @@ if (isset($_POST['submit'])){
             header( "Location:./home.php");
             exit;
         }else{
-            $_SESSION['msg']="4";
-            header( "Location:./index.php");
-            exit;
+            $_SESSION['msg']="Your account is invalid";
+            // header( "Location:./index.php");
+            // exit;
         }
 
 
@@ -71,6 +71,15 @@ if (isset($_POST['submit'])){
 <body>
 
 <div class="limiter">
+    <?php 
+    if(isset($_SESSION["msg"]) && $_SESSION["msg"] != '') {
+        $error = $_SESSION["msg"] ;
+        $_SESSION["msg"] = '';
+        echo  "<div role='alert'  class='alert-danger w-50 m-auto text-center' style='background:red;color:#fff'>$error</div> ";
+        unset($_SESSION["msg"]);
+
+        }
+    ?>
     <div class="container-login100">
         <div class="wrap-login100">
             <div class="login100-pic js-tilt" data-tilt>
