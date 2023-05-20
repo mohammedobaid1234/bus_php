@@ -50,7 +50,7 @@ if($_SESSION['role'] == 'admin'){
                 <td><?php echo $row['name']?></td>
                 <td><?php echo $row['std']?></td>
                 <td><?php echo $row['email']?></td>
-                <td>Computer& information Science</td>
+                <td><?php echo $row['specialization']?></td>
                 <td> <?php echo $row['city']?></td>
                 <td><?php echo $row['neighborhood']?></td>
                 <td><?php echo $row['mobile_no']?></td>
