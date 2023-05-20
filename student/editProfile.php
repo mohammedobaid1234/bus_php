@@ -31,19 +31,12 @@ if($_SESSION['role'] == 'std'){
                 ,relatives_mobile_no = '$relatives_mobile_no', kinship_relationship = '$kinship_relationship',blood_type = '$blood_type', specialization = '$specialization'
                 WHERE id = '$id'";
             $announcement = mysqli_query($conn, $announcementSql);
-                if($newId != $id){
-             ?>
+            print_r('ddddddd');
+            ?>
             <script>
-                window.location = 'http://localhost/students/student/index.php';
+                window.location = 'http://localhost/students/student/home.php';
             </script>
-        <?php
-                }else{
-                    ?>
-                    <script>
-                        window.location = 'http://localhost/students/student/editProfile.php';
-                    </script>
-        <?php
-                }
+            <?php
         }
     }
 
@@ -183,7 +176,7 @@ echo  "<div role='alert' class='alert-danger w-50 m-auto text-center'>$error</di
 
                             <div class="input-2" style=" margin-left: 90px;">
                                 <label  for=""> ID number</label>
-                                <input style="width: 120%;" class="form-control" name="id" required id="inputUsername" type="number" placeholder="Enter your ID number" value="<?php echo  $row['id']?>">
+                                <input style="width: 120%;" readonly class="form-control" name="id" required id="inputUsername" type="number" placeholder="Enter your ID number" value="<?php echo  $row['id']?>">
                             </div>
                         </div>
 
@@ -207,14 +200,14 @@ echo  "<div role='alert' class='alert-danger w-50 m-auto text-center'>$error</di
 
                             <div class="input-2" style=" margin-left: 90px;">
                                 <label  for="">Mobile number</label>
-                                <input style="width: 120%;" class="form-control" name="mobile_no" required id="inputUsername" type="number" placeholder="Enter the mobile number" value="<?php echo  $row['mobile_no']?>">
+                                <input style="width: 120%;" class="form-control" name="mobile_no" required id="inputUsername" minlength="10" maxlength="10"  pattern="\d{10}" type="phone" placeholder="Enter the mobile number" value="<?php echo  $row['mobile_no']?>">
                             </div>
                         </div>
 
                         <div class="mb-3" style="text-align: left !important; display: flex; flex-wrap: wrap;">
                             <div>
                                 <label  for="">Relative's phone number</label>
-                                <input style="width: 120%;" class="form-control" name="relatives_mobile_no" required id="inputUsername" type="number" placeholder="Enter a relative's phone number" value="<?php echo  $row['relatives_mobile_no']?>">
+                                <input style="width: 120%;" class="form-control" name="relatives_mobile_no" required id="inputUsername"  minlength="10" maxlength="10"  pattern="\d{10}" type="phone" placeholder="Enter a relative's phone number" value="<?php echo  $row['relatives_mobile_no']?>">
                             </div>
 
                             <div class="input-2" style=" margin-left: 90px;">
@@ -226,7 +219,17 @@ echo  "<div role='alert' class='alert-danger w-50 m-auto text-center'>$error</di
                         <div class="mb-3" style="text-align: left !important; display: flex; flex-wrap: wrap;">
                             <div>
                                 <label  for="">Blood  Type</label>
-                                <input style="width: 120%;" class="form-control" name="blood_type" required id="inputUsername" type="text" placeholder=" Enter Blood Type" value="<?php echo  $row['blood_type']?>">
+                                <!-- <input style="width: 120%;" class="form-control" name="blood_type" required id="inputUsername" type="text" placeholder=" Enter Blood Type" value="<?php echo  $row['blood_type']?>"> -->
+                                <select name="blood_type" class="form-control" style="width: 240px;"type="text" placeholder="Blood Group Type" required>
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                    <option value="O+">O+</option>
+                                    <option value="O-">O-</option>
+                                </select>
                             </div>
                             <div class="input-2" style=" margin-left: 90px;">
                                 <label  for="">specialization</label>

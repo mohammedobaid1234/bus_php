@@ -153,9 +153,9 @@ if (isset($_POST['submit'])){
 
                     <div class="row row-space">
                         <div class="col-2">
-                            <div class="input-group">
-                                <!-- <label class="label">Blood Group Type</label> -->
-                                    <select name="blood_type" class="input--style-4" type="text" placeholder="Blood Group Type" required>
+                            <div class="">
+                                <!-- <label class="label" style="display:block">Blood Group Type</label> -->
+                                <select name="blood_type" class="input--style-4 form-control" type="text" placeholder="Blood Group Type" required>
                                     <option value="A+">A+</option>
                                     <option value="A-">A-</option>
                                     <option value="B+">B+</option>
