@@ -117,5 +117,13 @@ include '../include/footer.php'
 <script>
    setTimeout(()=>{
        $('.js-example-basic-multiple').select2();
+       $('.js-example-basic-multiple').on('select2:selecting', function(e) {
+            var selectedOptions = $(this).val();
+            var maximumLength = 25; // Maximum number of selected options allowed
+
+            if (selectedOptions != null && selectedOptions.length >= maximumLength) {
+                e.preventDefault(); // Prevent selecting additional options
+      }
+    });
    },1000)
 </script>
