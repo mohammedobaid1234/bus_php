@@ -33,8 +33,8 @@ $result2=mysqli_query($conn,$qry3);
             <tbody>
 
                 <tr>
-                    <td rowspan="4"><?php echo  $row['name']?></td>
-                    <td rowspan="4"><?php echo  $row['bus_no']?></td>
+                    <td rowspan="79"><?php echo  $row['name']?></td>
+                    <td rowspan="79"><?php echo  $row['bus_no']?></td>
                 </tr>
             <?php
             while ($row1 = mysqli_fetch_assoc($result2)){
