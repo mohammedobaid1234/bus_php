@@ -1,4 +1,12 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+
+require '../vendor/phpmailer/phpmailer/src/Exception.php';
+require '../vendor/phpmailer/phpmailer/src/PHPMailer.php';
+require '../vendor/phpmailer/phpmailer/src/SMTP.php';
+require '../vendor/autoload.php';
 if(isset($_POST['submit'])){
     include("../include/connection.php");
     global $conn;
@@ -20,9 +28,8 @@ if(isset($_POST['submit'])){
             $_SESSION['user_id'] = $user_id;
 //            $otp = "INSERT INTO otps (user_id, msg) values ('$user_id', '$code')";
 //            $result=mysqli_query($conn,$qry);
-            require_once '../vendor/phpmailer/phpmailer/src/PHPMailer.php';
-            require_once '../vendor/phpmailer/phpmailer/src/SMTP.php';
-            $mail = new PHPMailer\PHPMailer\PHPMailer();
+           
+            $mail = new PHPMailer(true);
             // Set SMTP parameters
             $mail->isSMTP();
             $mail->Host = 'sandbox.smtp.mailtrap.io';

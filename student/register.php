@@ -32,7 +32,8 @@ if (isset($_POST['submit'])){
             $query = "INSERT INTO students (name, id, email, city, neighborhood, mobile_no, relatives_mobile_no,kinship_relationship,blood_type,password,status, specialization)
                         VALUES ('$name','$std_id','$email','$city','$neighborhood','$mobile_no','$relatives_mobile_no','$kinship_relationship','$blood_type','$password',1, '$specialization')";
             mysqli_query($conn, $query);
-             header( "Location:../index.php");
+            //  header( "Location:../index.php");
+            $_SESSION['msg1']="Your Request is Registered";
     
             ?>
             <script>
@@ -92,6 +93,15 @@ if (isset($_POST['submit'])){
                 $_SESSION["msg"] = '';
                 echo  "<div role='alert' class='alert-danger w-50 m-auto text-center' style='background:red;'>$error</div> ";
                 unset($_SESSION["msg"]);
+
+                }?>
+                <?php
+                if(isset($_SESSION["msg1"]) && $_SESSION["msg1"] != '') {
+
+                $error = $_SESSION["msg1"] ;
+                $_SESSION["msg1"] = '';
+                echo  "<div role='alert' class='alert-success w-50 m-auto text-center' style='background:green; color:white'>$error</div> ";
+                unset($_SESSION["msg1"]);
 
                 }?>
                 <h2 class="title">Sign Up</h2>

@@ -94,7 +94,8 @@ if (isset($_POST['submit'])){
                     <span class="symbol-input100">
 							<i class="fa fa-user-circle-o" aria-hidden="true"></i>
 						</span>
-                </div>
+                </div> require_once '../vendor/phpmailer/phpmailer/src/PHPMailer.php';
+            require_once '../vendor/phpmailer/phpmailer/src/SMTP.php';
 
                 <div class="wrap-input100 validate-input" data-validate = "Password is required">
                     <input class="input100" type="password" name="password" placeholder="Password" required>
@@ -114,17 +115,17 @@ if (isset($_POST['submit'])){
 						<span class="txt1">
 							Forgot
 						</span>
-                    <a class="txt2" href="Forgot Password.html">
+                    <a class="txt2" href="./forginPassword.php">
                         Password?
                     </a>
                 </div>
 
-                <div class="text-center p-t-136">
+                <!-- <div class="text-center p-t-136">
                     <a class="txt2" href="../Sign Up/index.html">
                         Create your Account
                         <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
                     </a>
-                </div>
+                </div> -->
             </form>
         </div>
     </div>
