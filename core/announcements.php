@@ -32,10 +32,13 @@ if($_SESSION['role'] == 'std'){
                 ?></p>
         </div>
     </div>
-    <hr style="width: 50%; height: 7px; background-color: #3a727f; border-radius: 10px;">
     <div class="main-ann2"  style="margin-top: 2%; text-align: center; text-transform:capitalize;">
-        <span style="font-weight: bold; font-size: 14px;"><i class="fa-solid fa-triangle-exclamation" style="color: #ffd43b;"></i> <?php echo  $data['msg']?></span>
+        <span style="font-weight: bold; font-size: 14px;"><i class="fa-solid fa-triangle-exclamation" style="color: #ffd43b;"></i> <?php echo  $data['title'] ?> : </span>
     </div>
+    <div class="main-ann2"  style="margin-top: 2%; text-align: center;">
+        <?php echo  $data['msg']?>
+    </div>
+    <hr style="width: 50%; height: 7px; background-color: #3a727f; border-radius: 10px;">
     <br>
 </div>
 <?php } ?>

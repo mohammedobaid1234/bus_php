@@ -1,5 +1,15 @@
 <?php
 include '../include/slidebar.php';
+$id = $_SESSION['id'];
+$qry = "SELECT * FROM groups  RIGHT JOIN drivers ON groups.driver_id = drivers.id  WHERE groups.id in  (SELECT  group_id FROM group_studuents	 where std_id = $id)";
+$result=mysqli_query($conn,$qry);
+$bus_num = '';
+if(mysqli_num_rows($result) > 0)
+{
+    $row=mysqli_fetch_assoc($result);
+    $bus_num = $row['bus_no'];
+
+}
 if (isset($_POST['submit'])){
     global $conn;
     session_start();
@@ -15,7 +25,7 @@ if (isset($_POST['submit'])){
 
 
     <img src="../assets/imgs/logo.png" alt="">
-    <h1 class="p-relative">Bus Number: 20</h1>
+    <h1 class="p-relative"><?php if(isset($bus_num) && $bus_num){echo 'Bus Number:' . $bus_num;} ?></h1>
     <div class="settings-page m-20">
 
         <!-- Start Settings Box -->

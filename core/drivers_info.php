@@ -31,7 +31,7 @@ if($_SESSION['role'] == 'admin'){
             <img src="../assets/imgs/testimonial1.png" alt="">
             <div class="card-title" style="border: none;">Driver Name : <?php echo $row['name'] ?></div>
 
-            <div class="card-title">Bus Number : <?php echo $row['bus_no'] ?>></div>
+            <div class="card-title">Bus Number : <?php echo $row['bus_no'] ?></div>
 
             <div class="card-title">Email : <?php echo $row['email'] ?></div>
             <div class="card-title">phone number : <?php echo $row['mobile_no'] ?></div>

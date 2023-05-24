@@ -170,7 +170,7 @@ if($_SESSION['role'] == 'driver'){
                             </p>
                         </div><div class="mb-3" style="text-align:left  !important;">
                             <label  for=""> Job Id</label> <p>
-                                <input class="form-control" id="inputUsername" name="job_id" required type="text" placeholder="Enter your job_id" value="<?php echo  $row['job_id']?>">
+                                <input class="form-control" id="inputUsername" readonly name="job_id" required type="text" placeholder="Enter your job_id" value="<?php echo  $row['job_id']?>">
                             </p>
                         </div>
 

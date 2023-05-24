@@ -1,4 +1,6 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+
 if(isset($_POST['submit'])){
     include("../include/connection.php");
     global $conn;
@@ -9,56 +11,117 @@ if(isset($_POST['submit'])){
 
         if(mysqli_num_rows($result) > 0)
         {
-            $row=mysqli_fetch_assoc($result);
-            $_SESSION['email_reset_id']=$row['id'];
-            $code = mt_rand(1111,9999);
-            $user_id = $row['id'];
-            session_start();
-            $_SESSION['code'] = $code;
-            $email = $row['email'];
-            $user_name = $row['name'];
-            $_SESSION['user_id'] = $user_id;
-//            $otp = "INSERT INTO otps (user_id, msg) values ('$user_id', '$code')";
-//            $result=mysqli_query($conn,$qry);
-            require_once '../vendor/phpmailer/phpmailer/src/PHPMailer.php';
-            require_once '../vendor/phpmailer/phpmailer/src/SMTP.php';
-            $mail = new PHPMailer\PHPMailer\PHPMailer();
-            // Set SMTP parameters
-            $mail->isSMTP();
-            $mail->Host = 'sandbox.smtp.mailtrap.io';
-            $mail->SMTPAuth = true;
-            $mail->Port = 2525;
-            $mail->Username = '06a33ceccd4951';
-            $mail->Password = '8bc433b4f697d7';
-            // Set email content and recipients
-            $mail->setFrom('busSystem@example.com', 'Bus Students System');
-            $mail->addAddress($email, $user_name);
-            $mail->Subject = 'Code For Reset Password';
-            $mail->Body = 'Hi Mr, ' .$user_name ."\nYour Code is " . $code;
+            
+                // Import the mailer class
+                require_once './vendor/autoload.php';
+                // create a new mailing object
+                // print_r('dxddddddddddddddd');
+                
 
-            // Send the email
-            if ($mail->send()) {
+                $mail = new PHPMailer();
+                // SMTP configuration
 
-                ?>
-                <script>
-                    setTimeout(()=>{
-                        toastr.success('Code sent Successfully.', {timeOut: 5000})
-                    },1000)
-                </script>
-                </script>
+                // $phpmailer = new PHPMailer();
+                // $phpmailer->isSMTP();
+                // $phpmailer->Host = 'smtp.mailtrap.io';
+                // $phpmailer->SMTPAuth = true;
+                // $phpmailer->Port = 2525;
+                // $phpmailer->Username = 'cb7xx33e1856xxx5b25xx';
+                // $phpmailer->Password = '87f63xx87d73e52xxx4xx';
+                
+                // $row=mysqli_fetch_assoc($result);
+                // session_start();
+                // $_SESSION['email_reset_id']=$row['id'];
+                // $code = mt_rand(1111,9999);
+                // $user_id = $row['id'];
+                // $_SESSION['code'] = $code;
+                // $email = $row['email'];
+                // $user_name = $row['name'];
+                // $_SESSION['user_id'] = $user_id;
 
-                <?php
-                header( "Location:./enterCode.php");
-                exit;
-            } else {
-                ?>
-                <script>
-                    setTimeout(()=>{
-                        toastr.error('Code sent failed.', {timeOut: 5000})
-                    },1000)
-                </script>
-                <?php
-            }
+                $phpmailer = new PHPMailer();
+                $phpmailer->isSMTP();
+                $phpmailer->Host = 'sandbox.smtp.mailtrap.io';
+                $phpmailer->SMTPAuth = true;
+                $phpmailer->Port = 2525;
+                $phpmailer->Username = '52e2cca36084fb';
+                $phpmailer->Password = 'c5d8a22c8cede9';
+                $mail->setFrom('no-reply@section.io', 'Node.js Deployment');
+                $mail->addAddress('test@gmail.com', 'Me');
+                // $mail->Subject = 'Thanks for using section.io Edge as a service!';
+                // $mail->addAddress($email, $user_name);
+                $mail->Subject = 'Code For Reset Password';
+                // $mail->Body = 'Hi Mr, ' .$user_name ."\nYour Code is " . $code;
+                // Our HTML setup
+
+                // $mail->isHTML(TRUE);
+                // $mail->Body = '<html>Hello johndoe, thank you for using our Node.js deployment and distribution platform. Kinldy check the document in the attachment below to review your payments plan.</html>';
+                // $mail->AltBody = 'Success';
+                // // adding mailing attachment for payment plan
+                // $mail->addAttachment('//node/paymments.pdf', 'payments.pdf');
+                // // send the thank you messange
+                if(!$mail->send()){
+                    echo 'Your message could not be develired, try again later';
+                    echo 'Error: ' . $mail->ErrorInfo;
+                } else {
+                    echo 'Your message has been sent successfully.';
+                }
+            // $row=mysqli_fetch_assoc($result);
+            // $_SESSION['email_reset_id']=$row['id'];
+            // $code = mt_rand(1111,9999);
+            // $user_id = $row['id'];
+            // session_start();
+            // $_SESSION['code'] = $code;
+            // $email = $row['email'];
+            // $user_name = $row['name'];
+            // $_SESSION['user_id'] = $user_id;
+// //            $otp = "INSERT INTO otps (user_id, msg) values ('$user_id', '$code')";
+// //            $result=mysqli_query($conn,$qry);
+//            try {
+//             //code...
+//             require_once '../vendor/phpmailer/phpmailer/src/PHPMailer.php';
+//             require_once '../vendor/phpmailer/phpmailer/src/SMTP.php';
+//             $mail = new PHPMailer\PHPMailer\PHPMailer();
+//             // Set SMTP parameters
+//             $mail->isSMTP();
+//             $mail->Host = 'sandbox.smtp.mailtrap.io';
+//             $mail->SMTPAuth = true;
+//             $mail->Port = 2525;
+//             $mail->Username = '52e2cca36084fb';
+//             $mail->Password = 'c5d8a22c8cede9';
+//             // Set email content and recipients
+//             $mail->setFrom('busSystem@example.com', 'Bus Students System');
+            // $mail->addAddress($email, $user_name);
+            // $mail->Subject = 'Code For Reset Password';
+            // $mail->Body = 'Hi Mr, ' .$user_name ."\nYour Code is " . $code;
+
+//            } catch (\Throwable $th) {
+//             //throw $th;
+//             print_r($th);
+//            }
+//             // Send the email
+//             if ($mail->send()) {
+
+//                 ?>
+//                 <script>
+//                     setTimeout(()=>{
+//                         toastr.success('Code sent Successfully.', {timeOut: 5000})
+//                     },1000)
+//                 </script>
+//                 </script>
+
+//                 <?php
+//                 header( "Location:./enterCode.php");
+//                 exit;
+//             } else {
+//                 ?>
+//                 <script>
+//                     setTimeout(()=>{
+//                         toastr.error('Code sent failed.', {timeOut: 5000})
+//                     },1000)
+//                 </script>
+//                 <?php
+//             }
 
         }
     }

@@ -1,55 +1,88 @@
 <?php
-
-if (isset($_POST['submit'])){
-    global $conn;
-    session_start();
-
+if(isset($_POST['submit'])){
     include("../include/connection.php");
-    $std_id = $_POST['std_id'];
-
-    $password = $_POST['password'];
-
-    if($std_id=="")
-    {
-        $_SESSION['msg']="1";
-        header( "Location:./index.php");
-        exit;
-    }
-    else if($password=="")
-    {
-        $_SESSION['msg']="2";
-        header( "Location:./index.php");
-        exit;
-    }
-    else
-    {
-        $qry="select * from drivers where job_id ='".$std_id."' and password='".$password."'";
+    global $conn;
+    if(isset($_POST['email'])){
+        $email = $_POST['email'];
+        $qry = "SELECT * FROM drivers where email = '$email'";
         $result=mysqli_query($conn,$qry);
+        print_r('dddddddddddd');
         if(mysqli_num_rows($result) > 0)
         {
             $row=mysqli_fetch_assoc($result);
-            $_SESSION['id']=$row['id'];
-            $_SESSION['name']=$row['name'];
-            $_SESSION['role']='driver';
-            header( "Location:./home.php");
-            exit;
+            $_SESSION['email_reset_id']=$row['id'];
+            $code = mt_rand(1111,9999);
+            $user_id = $row['id'];
+            session_start();
+            $_SESSION['code'] = $code;
+            $email = $row['email'];
+            $user_name = $row['name'];
+            $_SESSION['user_id'] = $user_id;
+                //            $otp = "INSERT INTO otps (user_id, msg) values ('$user_id', '$code')";
+                //            $result=mysqli_query($conn,$qry);
+            require_once '../vendor/phpmailer/phpmailer/src/PHPMailer.php';
+            require_once '../vendor/phpmailer/phpmailer/src/SMTP.php';
+            // $mail = new PHPMailer\PHPMailer\PHPMailer();
+            // // Set SMTP parameters
+            // $mail->isSMTP();
+            // $mail->Host = 'sandbox.smtp.mailtrap.io';
+            // $mail->SMTPAuth = true;
+            // $mail->Port = 2525;
+            // $mail->Username = '06a33ceccd4951';
+            // $mail->Password = '8bc433b4f697d7';
+            $mail = new PHPMailer\PHPMailer\PHPMailer();
+            $mail->isSMTP();
+            $mail->Host = 'sandbox.smtp.mailtrap.io';
+            $mail->SMTPAuth = true;
+            $mail->Port = 2525;
+            $mail->Username = '52e2cca36084fb';
+            $mail->Password = 'c5d8a22c8cede9';
+            // Set email content and recipients
+            $mail->setFrom('busSystem@example.com', 'Bus Students System');
+            $mail->addAddress($email, $user_name);
+            $mail->Subject = 'Code For Reset Password';
+            $mail->Body = 'Hi Mr, ' .$user_name ."\nYour Code is " . $code;
+
+            // Send the email
+            if ($mail->send()) {
+
+                ?>
+                <script>
+                    setTimeout(()=>{
+                        toastr.success('Code sent Successfully.', {timeOut: 5000})
+                    },1000)
+                </script>
+                </script>
+
+                <?php
+                header( "Location:./enterCode.php");
+                exit;
+            } else {
+                $_SESSION['msg']="This driver not exist";
+
+                ?>
+                <script>
+                    setTimeout(()=>{
+                        toastr.error('Code sent failed.', {timeOut: 5000})
+                    },1000)
+                </script>
+                <?php
+            }
+
         }else{
-            $_SESSION['msg']="Your account is invalid";
-            // header( "Location:./index.php");
-            // exit;
+            $_SESSION['msg']="This driver not exist";
+
         }
-
-
     }
-
+    // Include PHPMailer library
 }
-?>
 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Admin & Drivers Login</title>
+    <title>Reset your password</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
@@ -80,53 +113,27 @@ if (isset($_POST['submit'])){
 
         }
     ?>
-        <div class="wrap-login100">
-            <div class="login100-pic js-tilt" data-tilt>
-                <img src="../assets/assetsForLogin/images/img-01.png" alt="IMG">
-            </div>
+        <div class="wrap-login100" style="display: flex; justify-content: center; width: 600px; margin-left: 15px;">
 
-            <form class="login100-form validate-form" method="post" >
+            <form class="login100-form validate-form" method="post">
 					<span class="login100-form-title">
-						Admin & Drivers Login
+						Reset your password
 					</span>
 
                 <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-                    <input class="input100" type="number" name="std_id" placeholder="Job ID" required>
+                    <input class="input100" name="email" type="email" placeholder="Email" required>
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
-							<i class="fa fa-user-circle-o" aria-hidden="true"></i>
-						</span>
-                </div>
-
-                <div class="wrap-input100 validate-input" data-validate = "Password is required">
-                    <input class="input100" type="password" name="password" placeholder="Password" required>
-                    <span class="focus-input100"></span>
-                    <span class="symbol-input100">
-							<i class="fa fa-lock" aria-hidden="true"></i>
+							<i class="fa fa-envelope" aria-hidden="true"></i>
 						</span>
                 </div>
 
                 <div class="container-login100-form-btn">
-                    <button class="login100-form-btn" type="submit" name="submit">
-                        Login
+                    <button class="login100-form-btn" name="submit">
+                        Send
                     </button>
                 </div>
 
-                <div class="text-center p-t-12">
-						<span class="txt1">
-							Forgot
-						</span>
-                    <a class="txt2" href="./forginPassword.php">
-                        Password?
-                    </a>
-                </div>
-
-                <div class="text-center p-t-136">
-                    <a class="txt2" href="../Sign Up/index.html">
-                        Create your Account
-                        <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
-                    </a>
-                </div>
             </form>
         </div>
     </div>
@@ -151,6 +158,7 @@ if (isset($_POST['submit'])){
 </script>
 <!--===============================================================================================-->
 <script src="../assets/assetsForLogin/js/main.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 </body>
 </html>

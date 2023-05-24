@@ -1,55 +1,36 @@
 <?php
+session_start();
 
-if (isset($_POST['submit'])){
-    global $conn;
-    session_start();
+if(isset($_SESSION['verified'])) {
 
-    include("../include/connection.php");
-    $std_id = $_POST['std_id'];
+    if (isset($_POST['submit'])) {
+        include("../include/connection.php");
+        global $conn;
+        if(isset($_POST['newPass'])){
+            $user_id = $_SESSION['user_id'];
+            $pass = $_POST['newPass'];
 
-    $password = $_POST['password'];
+            $qry = "UPDATE drivers SET password='$pass' where  id = '$user_id'";
+            $result=mysqli_query($conn,$qry);
+            ?>
+            <script>
+            setTimeout(()=>{
+                toastr.success('Code sent Successfully.', {timeOut: 5000})
+                    },1000);
+                // window.location.href="http://localhost/drivers/student/";
 
-    if($std_id=="")
-    {
-        $_SESSION['msg']="1";
-        header( "Location:./index.php");
-        exit;
-    }
-    else if($password=="")
-    {
-        $_SESSION['msg']="2";
-        header( "Location:./index.php");
-        exit;
-    }
-    else
-    {
-        $qry="select * from drivers where job_id ='".$std_id."' and password='".$password."'";
-        $result=mysqli_query($conn,$qry);
-        if(mysqli_num_rows($result) > 0)
-        {
-            $row=mysqli_fetch_assoc($result);
-            $_SESSION['id']=$row['id'];
-            $_SESSION['name']=$row['name'];
-            $_SESSION['role']='driver';
-            header( "Location:./home.php");
-            exit;
-        }else{
-            $_SESSION['msg']="Your account is invalid";
-            // header( "Location:./index.php");
-            // exit;
+            </script>
+            <?php
+            header( "Location:./index.php");
+
         }
-
-
     }
 
-}
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Admin & Drivers Login</title>
+    <title>Enter Your Code</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
@@ -71,62 +52,29 @@ if (isset($_POST['submit'])){
 
 <div class="limiter">
     <div class="container-login100">
-    <?php 
-    if(isset($_SESSION["msg"]) && $_SESSION["msg"] != '') {
-        $error = $_SESSION["msg"] ;
-        $_SESSION["msg"] = '';
-        echo  "<div role='alert'  class='alert-danger w-50 m-auto text-center' style='background:red;color:#fff'>$error</div> ";
-        unset($_SESSION["msg"]);
+        <div class="wrap-login100" style="display: flex; justify-content: center; width: 600px; margin-left: 15px;">
 
-        }
-    ?>
-        <div class="wrap-login100">
-            <div class="login100-pic js-tilt" data-tilt>
-                <img src="../assets/assetsForLogin/images/img-01.png" alt="IMG">
-            </div>
-
-            <form class="login100-form validate-form" method="post" >
+            <form class="login100-form validate-form" method="post">
 					<span class="login100-form-title">
-						Admin & Drivers Login
+						Reset your password
 					</span>
 
-                <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-                    <input class="input100" type="number" name="std_id" placeholder="Job ID" required>
+                <div class="wrap-input100 validate-input" >
+                    <input class="input100" name="newPass" type="text" placeholder="New Password" required>
+<!--                    <br>-->
+<!--                    <input class="input100" name="confirmPass" type="text" placeholder="Code" required>-->
                     <span class="focus-input100"></span>
                     <span class="symbol-input100">
-							<i class="fa fa-user-circle-o" aria-hidden="true"></i>
-						</span>
-                </div>
-
-                <div class="wrap-input100 validate-input" data-validate = "Password is required">
-                    <input class="input100" type="password" name="password" placeholder="Password" required>
-                    <span class="focus-input100"></span>
-                    <span class="symbol-input100">
-							<i class="fa fa-lock" aria-hidden="true"></i>
+							<i class="fa fa-envelope" aria-hidden="true"></i>
 						</span>
                 </div>
 
                 <div class="container-login100-form-btn">
-                    <button class="login100-form-btn" type="submit" name="submit">
-                        Login
+                    <button class="login100-form-btn" name="submit">
+                        Send
                     </button>
                 </div>
 
-                <div class="text-center p-t-12">
-						<span class="txt1">
-							Forgot
-						</span>
-                    <a class="txt2" href="./forginPassword.php">
-                        Password?
-                    </a>
-                </div>
-
-                <div class="text-center p-t-136">
-                    <a class="txt2" href="../Sign Up/index.html">
-                        Create your Account
-                        <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
-                    </a>
-                </div>
             </form>
         </div>
     </div>
@@ -151,6 +99,34 @@ if (isset($_POST['submit'])){
 </script>
 <!--===============================================================================================-->
 <script src="../assets/assetsForLogin/js/main.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </body>
 </html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<script>
+    // Set the options that I want
+    toastr.options = {
+        "closeButton": true,
+        "newestOnTop": false,
+        "progressBar": true,
+        "positionClass": "toast-bottom-center",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+
+    function showTosterFail(){
+        toastr.error("Failed, The Code Not True");
+
+    }
+</script>
+<?php }?>

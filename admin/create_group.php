@@ -9,6 +9,14 @@ if($_SESSION['role'] == 'admin'){
         $city = $_POST['city'];
         $students[] = $_POST['students'];
         $name = $_POST['name'];
+        $fsql = "select * from drivers where bus_no = '$bus_no'";
+        $result=mysqli_query($conn,$fsql);
+        if(mysqli_num_rows($result) > 0)
+        {
+            $_SESSION['msg']="Bus No is already exist";
+        }else{
+            // header( "Location:./index.php");
+            // exit;
         $driver = "UPDATE drivers SET bus_no='$bus_no' WHERE id = $driver_id";
         $driver=mysqli_query($conn,$driver);
 
@@ -26,12 +34,13 @@ if($_SESSION['role'] == 'admin'){
                 echo "Error: " . $sql . "<br>" . mysqli_error($conn);
             }
         }
+    }
 
     }
     $id = $_SESSION['id'];
     $qry = "SELECT * FROM drivers where id not in (SELECT driver_id FROM groups)";
     $drivers=mysqli_query($conn,$qry);
-    $stdSql = "SELECT *  FROM students where id not in (SELECT std_id FROM group_studuents)";
+    $stdSql = "SELECT *  FROM students where status != '1' and id not in (SELECT std_id FROM group_studuents)";
     $students=mysqli_query($conn,$stdSql);
 
 }
@@ -41,6 +50,15 @@ if($_SESSION['role'] == 'admin'){
     <div class="wrapper d-grid gap-20">
         <!-- Start Quick Draft Widgt -->
         <div class="quick-draft p-20 bg-white rad-10">
+    <?php
+      if(isset($_SESSION["msg"]) && $_SESSION["msg"] != '') {
+        $error = $_SESSION["msg"] ;
+        $_SESSION["msg"] = '';
+        echo  "<div role='alert'  class='alert-danger w-50 m-auto text-center' style='background:red;color:#fff'>$error</div> ";
+        unset($_SESSION["msg"]);
+
+        }
+    ?>
             <h2 class="mt-0 mt-10">Create Group</h2>
             <p class="mt-0 mb-20 c-grey fs-15">Fill in the following data</p>
             <form method="post">
