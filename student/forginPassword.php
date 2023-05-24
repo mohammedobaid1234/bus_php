@@ -31,15 +31,16 @@ if(isset($_POST['submit'])){
 //            $result=mysqli_query($conn,$qry);
            try {
             //code...
-           
+            // require_once '../vendor/phpmailer/phpmailer/src/PHPMailer.php';
+            // require_once '../vendor/phpmailer/phpmailer/src/SMTP.php';
             $mail = new PHPMailer(true);
             // Set SMTP parameters
             $mail->isSMTP();
             $mail->Host = 'sandbox.smtp.mailtrap.io';
             $mail->SMTPAuth = true;
             $mail->Port = 2525;
-            $mail->Username = '52e2cca36084fb';
-            $mail->Password = 'c5d8a22c8cede9';
+            $mail->Username = '06a33ceccd4951';
+            $mail->Password = '8bc433b4f697d7';
             // Set email content and recipients
             $mail->setFrom('busSystem@example.com', 'Bus Students System');
             $mail->addAddress($email, $user_name);

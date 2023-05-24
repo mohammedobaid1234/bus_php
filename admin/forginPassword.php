@@ -28,7 +28,7 @@ if(isset($_POST['submit'])){
             $_SESSION['user_id'] = $user_id;
 //            $otp = "INSERT INTO otps (user_id, msg) values ('$user_id', '$code')";
 //            $result=mysqli_query($conn,$qry);
-           
+            // require_once '../vendor/phpmailer/phpmailer/src/SMTP.php';
             $mail = new PHPMailer(true);
             // Set SMTP parameters
             $mail->isSMTP();
@@ -37,6 +37,7 @@ if(isset($_POST['submit'])){
             $mail->Port = 2525;
             $mail->Username = '06a33ceccd4951';
             $mail->Password = '8bc433b4f697d7';
+           
             // Set email content and recipients
             $mail->setFrom('busSystem@example.com', 'Bus Students System');
             $mail->addAddress($email, $user_name);
