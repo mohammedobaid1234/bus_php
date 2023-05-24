@@ -5,9 +5,11 @@ global $conn;
 $id = $_SESSION['id'];
 $qry = "SELECT students.name as std_name, presence FROM students  JOIN group_studuents ON students.id = group_studuents.std_id where group_studuents.group_id = (SELECT id FROM groups where driver_id = $id)";
 $result=mysqli_query($conn,$qry);
+$bus_no = $_SESSION['bus_no'];
 ?>
 
 <img src="../assets/imgs/logo.png" alt="">
+<div class=" p-20 mt-0 mb-20" ><?php if(  $_SESSION['bus_no'] != null){echo 'Bus Number:' .  $_SESSION['bus_no'];} ?></div>
 <!-- Start Project Table -->
 <div class="projects p-20 bg-white rad-10 m-20">
     <h2 class="mt-0 mb-20">Main Page</h2>

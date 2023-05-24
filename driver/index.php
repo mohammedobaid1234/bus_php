@@ -31,6 +31,7 @@ if (isset($_POST['submit'])){
             $_SESSION['id']=$row['id'];
             $_SESSION['name']=$row['name'];
             $_SESSION['role']='driver';
+            $_SESSION['bus_no']=$row['bus_no'];
             header( "Location:./home.php");
             exit;
         }else{
